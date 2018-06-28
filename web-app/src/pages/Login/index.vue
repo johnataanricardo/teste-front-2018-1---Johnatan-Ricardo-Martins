@@ -57,8 +57,8 @@ export default {
       invisibility: true,      
       snackbar: false,
       user: {
-        email: 'teste@teste.com',
-        password: 'Teste123',
+        email: '',
+        password: '',
       },
       userRules: {
         emailRules: [
