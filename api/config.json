@@ -1,0 +1,12 @@
+{
+  "mongo": {
+    "base_url": "mongodb://@localhost:27017/git_hub_api",
+    "database": "git_hub_api"
+  },
+  "jwt" : {
+    "jwtSecret": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImp0aSI6IjJlOWZhMTZjLTIxNmQtNGE2Mi05NTJkLWYzMWIxZGQ1OTEwOCIsImlhdCI6MTUyOTMyOTgzMywiZXhwIjoxNTI5MzMzNDMzfQ.virlZo3UkmOKWcqjzNBXrBenAZZTHQyDbJfvQFSTovk",
+    "jwtSession": {
+      "session": false
+    }
+  }
+}
