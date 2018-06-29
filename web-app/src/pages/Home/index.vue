@@ -18,6 +18,8 @@
         </v-layout>
       </v-form>
     </div>
+    <Card ref="card" @click="openDialog"/>
+    <Dialog ref="dialog"/>
     <v-snackbar
       :timeout="6000"
       :bottom="true"
@@ -30,13 +32,15 @@
 
 <script>
 import Menu from '@/components/Menu'
+import Card from '@/components/Card'
+import Dialog from '@/components/Dialog'
 import axios from 'axios'
 
 const api = 'https://api.github.com/users/'
 
 export default {
   name: 'Home', 
-  components: { Menu },
+  components: { Menu, Card, Dialog },
   data: () => ({
     valid: true,
     username: '',
@@ -50,14 +54,33 @@ export default {
     findUser() {      
       if (this.$refs.form.validate()) {
         const data = this
+        const card = this.$refs.card
         axios.get(api + this.username).then(response => (      
-          console.log(response)
+          card.show = true,
+          card.imageUrl = response.data.avatar_url,
+          card.name = response.data.name,
+          card.location = response.data.location,
+          card.bio = response.data.bio
         )).catch(function (error) {
           if (error.response.status == 404) {
+            card.show = false
             data.snackbar = true
           }
         })
       }
+    },
+    openDialog() {
+      const dialog = this.$refs.dialog
+      const data = this
+      axios.get(api + this.username + '/repos').then(response => (      
+          dialog.show = true,
+          dialog.repositories = response.data
+      )).catch(function (error) {
+        if (error.response.status == 404) {
+          dialog.show = false
+          data.snackbar = true
+        }
+      })
     }
   }
 }
