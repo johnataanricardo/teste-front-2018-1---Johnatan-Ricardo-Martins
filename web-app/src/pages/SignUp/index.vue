@@ -23,6 +23,7 @@ export default {
   methods: {
     onSave: function (){
       const user = JSON.stringify(this.$refs.form.user)
+      
       axios.post(api + '/user/new/' + user, { 
         headers: {        
           'Content-Type': 'application/json',

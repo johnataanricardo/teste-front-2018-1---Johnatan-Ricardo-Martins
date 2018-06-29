@@ -50,19 +50,23 @@ export default {
   methods: {
     onSave: function (){
       const token = 'Bearer ' + localStorage.getItem('token');
+
+      const headers = {        
+        'Content-Type': 'application/json',
+        'Authorization': token
+      }
+
       const form = this.$refs.form
       const user = JSON.stringify(form.user)
-      axios.post(api + '/user/' + user, { 
-        headers: {        
-          'Content-Type': 'application/json',
-          'Authorization': token
-        }
-      }).then(response => (
+      const instance = axios.create({
+        baseURL: api + '/user/',        
+        headers: headers
+      });
+
+      instance.post(user).then(response => 
         form.text = 'Salvo com sucesso!',
         form.snackbar = true
-      )).catch(function (error) {
-        console.log(error);
-      })
+      );
     }
   }
 }
