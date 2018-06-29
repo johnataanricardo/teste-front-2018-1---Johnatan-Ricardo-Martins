@@ -22,7 +22,8 @@ export default {
   },
   methods: {
     onSave: function (){
-      const user = JSON.stringify(this.$refs.form.user)
+      const form = this.$refs.form
+      const user = JSON.stringify(form.user)
       
       axios.post(api + '/user/new/' + user, { 
         headers: {        
@@ -33,13 +34,15 @@ export default {
       )).catch(function (error) {
         console.log(error);
       })
-      
-      if (localStorage.token) {
-        setTimeout( () => this.$router.push({ path: '/home'}), 100);
-      } else {
-        this.$refs.form.text = 'Email informado já está em uso.'
-        this.$refs.form.snackbar = true
-      }
+
+      setTimeout(function() {
+        if (localStorage.token) {
+          router.push('/home')
+        } else {
+          form.text = 'Email informado já está em uso.'
+          form.snackbar = true
+        }
+      }, 100);
     },
   }
 }
