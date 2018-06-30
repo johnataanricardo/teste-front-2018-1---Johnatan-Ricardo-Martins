@@ -1,6 +1,6 @@
 # Teste Front-End 2018-1 - Johnatan-Ricardo-Martins
 
-Nesta aplicação o usuário poderá criar uma conta de usuário, após a criação da conta o mesmo é redirecionado para a aplicação, a aplicação tem como objetivo pesquisar usuários do GitHub, apresentando as informações de seu perfil, e uma lista de seus repositórios com paginação.
+Nesta aplicação o usuário poderá criar uma conta de usuário, após a criação da conta o mesmo é redirecionado para a aplicação, a aplicação tem como objetivo pesquisar usuários do GitHub, apresentando as informações de seu perfil em um cartão, no qual a partir deste, o usuário pode visualizar uma lista de seus repositórios e fazer anotações ao usuário referente;
 
 A aplicação consome das seguintes API's públicas:
 
@@ -29,8 +29,11 @@ npm install
 
 Criar um mongoDB com os seguintes requisitos:
 
- - Nome: git_hub_api;
- - Collections: user, annotations;
+ - DataBase: git_hub_api;
+ - Collections: user, annotation;
+ - Informar url do banco de dados no seguinte arquivo: api/config.json;
+ - A api está configurada na porta 3000, caso seja necessário alterar a mesma, basta alterar a porta no arquivo: api/index.js, caso altere a porta da API, é necessário alterar a API_URL no seguinte arquivo: web-app/config/dev.env.js;
+
 
 # Ativando servidor da API
 node index
