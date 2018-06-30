@@ -34,7 +34,7 @@
 
 <script>
 import Menu from '@/components/Menu'
-import Card from './Card'
+import Card from './components/Card'
 import AnnotationDialog from './components/AnnotationDialog'
 import RepositoriesDialog from './components/RepositoriesDialog'
 import axios from 'axios'
@@ -78,35 +78,43 @@ export default {
     },
     openRepositoriesDialog() {
       const repositoriesDialog = this.$refs.repositoriesDialog
-      axios.get(gitHubApi + this.userName + '/repos').then(response => (      
+      if (this.userName) {
+        axios.get(gitHubApi + this.userName + '/repos').then(response => (      
           repositoriesDialog.show = true,
           repositoriesDialog.repositories = response.data
-      )).catch(function (error) {
-        if (error.response.status == 404) {
+        )).catch(function (error) {
+          if (error.response.status == 404) {
             repositoriesDialog.show = false
           }
-      })
+        })
+      } else {
+        this.$refs.card.show = false
+      }
     },
     openAnnotationDialog() {
       const data = this
       const token = 'Bearer ' + localStorage.getItem('token')
       const annotationDialog = this.$refs.annotationDialog
-      axios.get(api + '/annotation/' + this.userName, { 
-        headers: {        
-          'Content-Type': 'application/json',
-          'Authorization': token
-        }
-      }).then(response => {
-        if (response.data) {
-          annotationDialog.annotation = response.data.annotation
-        } else {
-          annotationDialog.annotation = ''
-        }
-        annotationDialog.show = true
-        annotationDialog.saveAnnotation = data.saveAnnotation        
-      }).catch(function (error) {
-        console.log(error);
-      })
+      if (this.userName) {
+        axios.get(api + '/annotation/' + this.userName, { 
+          headers: {        
+            'Content-Type': 'application/json',
+            'Authorization': token
+          }
+        }).then(response => {
+          if (response.data) {
+            annotationDialog.annotation = response.data.annotation
+          } else {
+            annotationDialog.annotation = ''
+          }
+          annotationDialog.show = true
+          annotationDialog.saveAnnotation = data.saveAnnotation        
+        }).catch(function (error) {
+          console.log(error);
+        })
+      } else {
+        this.$refs.card.show = false
+      }
     },
     saveAnnotation() {
       const data = this
