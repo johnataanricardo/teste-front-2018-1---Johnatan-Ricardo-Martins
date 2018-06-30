@@ -12,7 +12,7 @@
               <h3 class="headline mb-0">GitHub API</h3>
             </div>            
           </v-card-title>
-          <v-form id="form" ref="form" v-model="valid" lazy-validation>
+          <v-form id="form" ref="form" v-model="valid" @keyup.native.enter="submit" lazy-validation>
             <v-text-field
               v-model="user.email"
               :rules="userRules.emailRules"

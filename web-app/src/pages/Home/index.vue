@@ -7,12 +7,13 @@
           <v-flex xs12>
             <v-text-field 
               v-model="username" 
+              v-on:keyup.enter="findUser"
               color="red" 
               label="Pesquisar usuário" 
-              :rules="usernameRules" 
-              required
+              :rules="usernameRules"            
               :append-icon="'search'"
-              :append-icon-cb="findUser">
+              :append-icon-cb="findUser"
+              required>
             </v-text-field>
           </v-flex>
         </v-layout>
@@ -32,8 +33,8 @@
 
 <script>
 import Menu from '@/components/Menu'
-import Card from '@/components/Card'
-import Dialog from '@/components/Dialog'
+import Card from './Card'
+import Dialog from './Dialog'
 import axios from 'axios'
 
 const api = 'https://api.github.com/users/'

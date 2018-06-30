@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import DataTable from '@/components/DataTable'
+import DataTable from '../DataTable'
 
 export default {
   name: 'Dialog', 

@@ -5,7 +5,7 @@
         <h3 class="headline mb-0">{{ title }}</h3>
       </v-flex>
     </v-layout>
-    <v-form ref="form" v-model="valid" lazy-validation>
+    <v-form ref="form" v-model="valid" @keyup.native.enter="submit" lazy-validation>
       <v-layout>
         <v-flex xs6 class="text-field-right">
           <v-text-field  v-model="user.firstName" :rules="textFieldRule" color="red" label="Nome" required ></v-text-field>
