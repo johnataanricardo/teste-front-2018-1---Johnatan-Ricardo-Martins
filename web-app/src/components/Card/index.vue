@@ -50,11 +50,13 @@ export default {
 <style scoped>
 
   #card {
-    padding: 2% 30% 2% 30%;
+    padding: 2% 40% 2% 40%;
   }
 
-  .image {
-    height: 400px;
+  @media screen and (max-width: 1200px) {
+    #card {
+      padding: 5% 30% 2% 30%;
+    }
   }
 
   @media screen and (max-width: 600px)  {

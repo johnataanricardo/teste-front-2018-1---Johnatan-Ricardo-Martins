@@ -44,7 +44,7 @@ export default {
   data: () => ({
     valid: true,
     username: '',
-    text: 'Usuário não encontrado',
+    text: 'Usuário não encontrado!',
     snackbar: false,
     usernameRules: [
       v => !!v || 'É necessário informar um usuário'
@@ -77,9 +77,8 @@ export default {
           dialog.repositories = response.data
       )).catch(function (error) {
         if (error.response.status == 404) {
-          dialog.show = false
-          data.snackbar = true
-        }
+            dialog.show = false
+          }
       })
     }
   }
@@ -89,16 +88,22 @@ export default {
 <style scoped>
 
   .form {
-    padding: 2% 30% 2% 30%;
+    padding: 2% 40% 2% 40%;
   }
 
   .title {
     margin-top: 2%
   }
 
+  @media screen and (max-width: 1200px) {
+    .form {
+      padding: 5% 30% 2% 30%;
+    }
+  }
+
   @media screen and (max-width: 600px)  {
     .form {
-      padding: 5% 20% 2% 20%;
+      padding: 5% 10% 2% 10%;
     }
   }
 

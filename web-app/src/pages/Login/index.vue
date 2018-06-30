@@ -39,8 +39,8 @@
             :timeout="6000"
             :bottom="true"
             v-model="snackbar">
-              Usuário ou senha incorretos
-            <v-btn flat color="pink" @click.native="snackbar = false">Close</v-btn>
+              Usuário ou senha incorretos!
+            <v-btn flat color="red" @click.native="snackbar = false">Close</v-btn>
           </v-snackbar>
         </v-card>
       </v-flex>

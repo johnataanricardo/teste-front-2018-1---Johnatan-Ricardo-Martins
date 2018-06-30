@@ -24,7 +24,7 @@ export default {
     }
   },
   mounted () {
-    const token = 'Bearer ' + localStorage.getItem('token');
+    const token = 'Bearer ' + localStorage.getItem('token')
     const fields = ''
     const user = this.$refs.form.user
     axios.get(api + '/user/' + JSON.stringify(fields), { 
@@ -61,12 +61,12 @@ export default {
       const instance = axios.create({
         baseURL: api + '/user/',        
         headers: headers
-      });
+      })
 
       instance.post(user).then(response => 
         form.text = 'Salvo com sucesso!',
         form.snackbar = true
-      );
+      )
     }
   }
 }

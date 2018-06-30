@@ -115,7 +115,7 @@ export default {
         if (this.user.password == this.user.repeatPassword) {
           this.$emit('click')
         } else {
-          this.text = 'Os campos de senha não estão iguais.'
+          this.text = 'As senhas não estão iguais.'
           this.snackbar = true
         }
       }
