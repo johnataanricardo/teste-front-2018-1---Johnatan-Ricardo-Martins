@@ -2,7 +2,6 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import axios from 'axios';
 import Account from '@/pages/Account';
-import Annotations from '@/pages/Annotations';
 import Home from '@/pages/Home/';
 import Login from '@/pages/Login/';
 import SignUp from '@/pages/SignUp';
@@ -51,12 +50,6 @@ const router = new Router({
       path: '/account',
       name: 'Account',
       component: Account,
-      meta: {requiresAuth: true}
-    },
-    {
-      path: '/annotations',
-      name: 'Annotations',
-      component: Annotations,
       meta: {requiresAuth: true}
     }
   ]

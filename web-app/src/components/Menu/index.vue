@@ -58,7 +58,6 @@ export default {
       },
       itemsMenu: [
         { title: 'Início', page: '/home', icon: 'dashboard' },
-        { title: 'Anotações', page: '/annotations', icon: 'description' },
         { title: 'Conta', page: '/account', icon: 'account_box' }
       ]
     }
@@ -72,7 +71,7 @@ export default {
         'Authorization': token
       }
     }).then(response => (      
-      this.user.name = response.data[0].firstName + " " + response.data[0].lastName
+      this.user.name = response.data.firstName + " " + response.data.lastName
     )).catch(function (error) {
       console.log(error);
     })

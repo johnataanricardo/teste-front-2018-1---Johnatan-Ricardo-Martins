@@ -1,7 +1,7 @@
 <template>
-  <div id="dialog">
+  <div id="repositoriesDialog">
     <v-dialog
-      ref="dialog"
+      ref="repositoriesDialog"
       v-model="show"
       fullscreen
       hide-overlay
@@ -24,7 +24,7 @@
 import DataTable from '../DataTable'
 
 export default {
-  name: 'Dialog', 
+  name: 'RepositoriesDialog', 
   components: { DataTable },
   data () {
     return {

@@ -13,7 +13,7 @@ router.get('/:fields', auth.authenticate(), function(req, res) {
   const decodeToken = jwt.decode(token, config.jwt.jwtSecret);
   const fields = JSON.parse(req.params.fields);
   const collection = db.get().collection('user');
-  collection.find({_id: new ObjectId(decodeToken.id)}, fields).toArray(function(err, result) {
+  collection.findOne({_id: new ObjectId(decodeToken.id)}, fields, function(err, result) {
     if (err) throw err;
     res.send(result);
   });

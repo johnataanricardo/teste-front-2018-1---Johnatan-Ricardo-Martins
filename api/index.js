@@ -3,6 +3,7 @@ const express = require('express')
 const bodyParser = require("body-parser");
 const db = require('./db');
 const config = require('./config');
+const annotation = require('./controllers/annotation');
 const token = require('./controllers/token/');
 const user = require('./controllers/user/');
 const auth = require('./service/auth/')();
@@ -20,8 +21,9 @@ app.use(function (req, res, next) {
   next();
 });
 
-app.use('/user', user);
+app.use('/annotation', annotation);
 app.use('/token', token);
+app.use('/user', user);
 
 db.connect(config.mongo.base_url, function(err) {
   if (err) {

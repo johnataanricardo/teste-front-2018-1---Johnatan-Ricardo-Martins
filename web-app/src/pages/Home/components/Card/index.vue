@@ -12,8 +12,8 @@
         </div>
       </v-card-title>
       <v-card-actions>
-        <v-btn flat>Anotar</v-btn>
-        <v-btn flat color="red" @click="openDialog">Repositórios</v-btn>
+        <v-btn flat @click="openAnnotationDialog">Anotar</v-btn>
+        <v-btn flat color="red" @click="openRepositoriesDialog">Repositórios</v-btn>
         <v-spacer></v-spacer>
         <v-btn icon @click.native="showText = !showText">
           <v-icon>{{ showText ? 'keyboard_arrow_down' : 'keyboard_arrow_up' }}</v-icon>
@@ -39,9 +39,10 @@ export default {
     location: '',
     bio: ''
   }),
-  methods: {
-    openDialog() {
-      this.$emit('click')
+  methods: {    
+    openAnnotationDialog() {      
+    },
+    openRepositoriesDialog() {
     }
   }
 }

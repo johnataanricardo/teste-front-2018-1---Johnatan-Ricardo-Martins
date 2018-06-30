@@ -6,21 +6,22 @@
         <v-layout>
           <v-flex xs12>
             <v-text-field 
-              v-model="username" 
+              v-model="userName" 
               v-on:keyup.enter="findUser"
               color="red" 
               label="Pesquisar usuário" 
-              :rules="usernameRules"            
+              :rules="userNameRules"            
               :append-icon="'search'"
-              :append-icon-cb="findUser"
+              @click:append="findUser"
               required>
             </v-text-field>
           </v-flex>
         </v-layout>
       </v-form>
     </div>
-    <Card ref="card" @click="openDialog"/>
-    <Dialog ref="dialog"/>
+    <Card ref="card"/>
+    <AnnotationDialog ref="annotationDialog"/>
+    <RepositoriesDialog ref="repositoriesDialog"/>
     <v-snackbar
       :timeout="6000"
       :bottom="true"
@@ -34,20 +35,22 @@
 <script>
 import Menu from '@/components/Menu'
 import Card from './Card'
-import Dialog from './Dialog'
+import AnnotationDialog from './components/AnnotationDialog'
+import RepositoriesDialog from './components/RepositoriesDialog'
 import axios from 'axios'
 
-const api = 'https://api.github.com/users/'
+const gitHubApi = 'https://api.github.com/users/'
+const api = process.env.API_URL
 
 export default {
   name: 'Home', 
-  components: { Menu, Card, Dialog },
+  components: { Menu, Card, AnnotationDialog, RepositoriesDialog },
   data: () => ({
     valid: true,
-    username: '',
-    text: 'Usuário não encontrado!',
+    userName: '',
+    text: '',
     snackbar: false,
-    usernameRules: [
+    userNameRules: [
       v => !!v || 'É necessário informar um usuário'
     ],
   }),
@@ -55,32 +58,80 @@ export default {
     findUser() {      
       if (this.$refs.form.validate()) {
         const data = this
-        const card = this.$refs.card
-        axios.get(api + this.username).then(response => (      
+        const card = this.$refs.card        
+        axios.get(gitHubApi + this.userName).then(response => (      
           card.show = true,
           card.imageUrl = response.data.avatar_url,
           card.name = response.data.name,
           card.location = response.data.location,
-          card.bio = response.data.bio
+          card.bio = response.data.bio ? response.data.bio : 'Sem descrição!',
+          card.openRepositoriesDialog = data.openRepositoriesDialog,
+          card.openAnnotationDialog = data.openAnnotationDialog
         )).catch(function (error) {
           if (error.response.status == 404) {
             card.show = false
+            data.text = 'Usuário não encontrado!'
             data.snackbar = true
           }
         })
       }
     },
-    openDialog() {
-      const dialog = this.$refs.dialog
-      const data = this
-      axios.get(api + this.username + '/repos').then(response => (      
-          dialog.show = true,
-          dialog.repositories = response.data
+    openRepositoriesDialog() {
+      const repositoriesDialog = this.$refs.repositoriesDialog
+      axios.get(gitHubApi + this.userName + '/repos').then(response => (      
+          repositoriesDialog.show = true,
+          repositoriesDialog.repositories = response.data
       )).catch(function (error) {
         if (error.response.status == 404) {
-            dialog.show = false
+            repositoriesDialog.show = false
           }
       })
+    },
+    openAnnotationDialog() {
+      const data = this
+      const token = 'Bearer ' + localStorage.getItem('token')
+      const annotationDialog = this.$refs.annotationDialog
+      axios.get(api + '/annotation/' + this.userName, { 
+        headers: {        
+          'Content-Type': 'application/json',
+          'Authorization': token
+        }
+      }).then(response => {
+        if (response.data) {
+          annotationDialog.annotation = response.data.annotation
+        } else {
+          annotationDialog.annotation = ''
+        }
+        annotationDialog.show = true
+        annotationDialog.saveAnnotation = data.saveAnnotation        
+      }).catch(function (error) {
+        console.log(error);
+      })
+    },
+    saveAnnotation() {
+      const data = this
+      const token = 'Bearer ' + localStorage.getItem('token');
+      const headers = {        
+        'Content-Type': 'application/json',
+        'Authorization': token
+      }
+
+      const instance = axios.create({
+        baseURL: api + '/annotation/',        
+        headers: headers
+      })
+
+      const annotationDialog = this.$refs.annotationDialog
+      const annotation = {
+        annotation: annotationDialog.annotation,
+        userName: data.userName
+      }
+
+      instance.post(JSON.stringify(annotation)).then(response => 
+        annotationDialog.show = false,
+        data.text = 'Anotação salva com sucesso!',
+        data.snackbar = true
+      )
     }
   }
 }

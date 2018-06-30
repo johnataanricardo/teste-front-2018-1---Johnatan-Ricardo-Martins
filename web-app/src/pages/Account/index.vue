@@ -33,16 +33,16 @@ export default {
         'Authorization': token
       }
     }).then(response => (      
-      user.firstName = response.data[0].firstName,
-      user.lastName = response.data[0].lastName,
-      user.zip = response.data[0].zip,
-      user.state = response.data[0].state,
-      user.city = response.data[0].city,
-      user.address = response.data[0].address,
-      user.number = response.data[0].number,
-      user.email = response.data[0].email,
-      user.password = response.data[0].password,
-      user.repeatPassword = response.data[0].password
+      user.firstName = response.data.firstName,
+      user.lastName = response.data.lastName,
+      user.zip = response.data.zip,
+      user.state = response.data.state,
+      user.city = response.data.city,
+      user.address = response.data.address,
+      user.number = response.data.number,
+      user.email = response.data.email,
+      user.password = response.data.password,
+      user.repeatPassword = response.data.password
     )).catch(function (error) {
       console.log(error);
     })

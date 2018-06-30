@@ -29,7 +29,7 @@
       <v-text-field
         v-model="user.password"
         :append-icon="invisibility1 ? 'visibility' : 'visibility_off'"
-        :append-icon-cb="() => (invisibility1 = !invisibility1)"
+        @click:append="() => (invisibility1 = !invisibility1)"
         :type="invisibility1 ? 'password' : 'text'"
         :rules="passwordRules" 
         color="red"
@@ -39,7 +39,7 @@
       <v-text-field
         v-model="user.repeatPassword"
         :append-icon="invisibility2 ? 'visibility' : 'visibility_off'"
-        :append-icon-cb="() => (invisibility2 = !invisibility2)"
+        @click:append="() => (invisibility2 = !invisibility2)"
         :type="invisibility2 ? 'password' : 'text'"
         :rules="textFieldRule" 
         color="red"

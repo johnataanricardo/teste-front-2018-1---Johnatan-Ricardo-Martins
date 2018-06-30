@@ -23,7 +23,7 @@
             <v-text-field
               v-model="user.password"
               :append-icon="invisibility ? 'visibility' : 'visibility_off'"
-              :append-icon-cb="() => (invisibility = !invisibility)"
+              @click:append="() => (invisibility = !invisibility)"
               :type="invisibility ? 'password' : 'text'"
               :rules="userRules.passwordRule"
               color="red"
