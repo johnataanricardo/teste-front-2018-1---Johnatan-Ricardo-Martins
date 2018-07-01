@@ -2,22 +2,18 @@
   <div id="home">
     <Menu/>    
     <div class="form">
-      <v-form ref="form" v-model="valid" lazy-validation>
-        <v-layout>
-          <v-flex xs12>
-            <v-text-field 
-              v-model="userName" 
-              v-on:keyup.enter="findUser"
-              color="red" 
-              label="Pesquisar usuário" 
-              :rules="userNameRules"            
-              :append-icon="'search'"
-              @click:append="findUser"
-              required>
-            </v-text-field>
-          </v-flex>
-        </v-layout>
-      </v-form>
+      <v-layout>
+        <v-flex xs12>
+          <v-text-field 
+            v-model="userName" 
+            v-on:keyup.enter="findUser"
+            color="red" 
+            label="Pesquisar usuário" 
+            :append-icon="'search'"
+            @click:append="findUser">
+          </v-text-field>
+        </v-flex>
+      </v-layout>
     </div>
     <Card ref="card"/>
     <AnnotationDialog ref="annotationDialog"/>
@@ -49,14 +45,11 @@ export default {
     valid: true,
     userName: '',
     text: '',
-    snackbar: false,
-    userNameRules: [
-      v => !!v || 'É necessário informar um usuário'
-    ],
+    snackbar: false
   }),
   methods: {
     findUser() {      
-      if (this.$refs.form.validate()) {
+      if (this.userName) {
         const data = this
         const card = this.$refs.card        
         axios.get(gitHubApi + this.userName).then(response => (      
@@ -74,6 +67,9 @@ export default {
             data.snackbar = true
           }
         })
+      } else {
+        this.text = 'É necessário informar um usuário!'
+        this.snackbar = true
       }
     },
     openRepositoriesDialog() {
@@ -89,6 +85,8 @@ export default {
         })
       } else {
         this.$refs.card.show = false
+        this.text = 'É necessário informar um usuário!'
+        this.snackbar = true
       }
     },
     openAnnotationDialog() {
@@ -114,6 +112,8 @@ export default {
         })
       } else {
         this.$refs.card.show = false
+        this.text = 'É necessário informar um usuário!'
+        this.snackbar = true
       }
     },
     saveAnnotation() {
